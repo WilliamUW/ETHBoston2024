@@ -1,0 +1,63 @@
+{
+  "name": "se-2",
+  "version": "0.0.1",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/hardhat",
+      "packages/nextjs"
+    ]
+  },
+  "scripts": {
+    "account": "yarn workspace @se-2/hardhat account",
+    "chain": "yarn workspace @se-2/hardhat chain",
+    "fork": "yarn workspace @se-2/hardhat fork",
+    "deploy": "yarn workspace @se-2/hardhat deploy",
+    "verify": "yarn workspace @se-2/hardhat verify",
+    "hardhat-verify": "yarn workspace @se-2/hardhat hardhat-verify",
+    "compile": "yarn workspace @se-2/hardhat compile",
+    "generate": "yarn workspace @se-2/hardhat generate",
+    "flatten": "yarn workspace @se-2/hardhat flatten",
+    "hardhat:lint": "yarn workspace @se-2/hardhat lint",
+    "hardhat:lint-staged": "yarn workspace @se-2/hardhat lint-staged",
+    "hardhat:format": "yarn workspace @se-2/hardhat format",
+    "hardhat:test": "yarn workspace @se-2/hardhat test",
+    "test": "yarn hardhat:test",
+    "format": "yarn next:format && yarn hardhat:format",
+    "start": "yarn workspace @se-2/nextjs dev",
+    "next:lint": "",
+    "next:format": "",
+    "next:check-types": "",
+    "next:build": "yarn workspace @se-2/nextjs build",
+    "postinstall": "husky install",
+    "precommit": "lint-staged",
+    "vercel": "yarn workspace @se-2/nextjs vercel",
+    "vercel:yolo": "yarn workspace @se-2/nextjs vercel:yolo"
+  },
+  "packageManager": "yarn@3.2.3",
+  "devDependencies": {
+    "@types/mapbox-gl": "^3",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3"
+  },
+  "dependencies": {
+    "@chatscope/chat-ui-kit-react": "^2.0.3",
+    "@chatscope/chat-ui-kit-styles": "^1.4.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@google/generative-ai": "^0.8.0",
+    "@lighthouse-web3/sdk": "^0.3.0",
+    "@mui/material": "^5.15.15",
+    "@web3-storage/w3cli": "^7.6.0",
+    "@web3-storage/w3up-client": "^12.5.1",
+    "alchemy-sdk": "^3.2.1",
+    "antd": "^5.16.1",
+    "mapbox-gl": "^3.3.0",
+    "mui": "^0.0.1",
+    "openai": "^4.38.3",
+    "react-icons": "^5.1.0",
+    "react-map-gl": "^7.1.7",
+    "react-markdown": "^9.0.1",
+    "web3.storage": "^4.5.5"
+  }
+}
