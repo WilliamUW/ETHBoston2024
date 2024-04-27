@@ -90,6 +90,8 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (connectedAddress) {
       setNfts(historicalSites as never[]);
+    } else {
+      setNfts([]);
     }
 
     // const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
@@ -411,7 +413,7 @@ Loan Amount: 100 USDC
           )}
           <br />
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center" }}>
-            {(step === 0 || step === 1) && (
+            {(step === 0 || step === 1) && connectedAddress && (
               <Card sx={{ width: "250px", borderRadius: "1em", padding: "10px" }}>
                 <strong>Create your own Historical NFT!</strong>
                 <br />
