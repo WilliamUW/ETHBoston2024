@@ -615,7 +615,6 @@ Loan Amount: 100 USDC
           initialViewState={{ latitude: 42.3601, longitude: -71.0589, zoom: 12 }}
           maxZoom={30}
           minZoom={1}
-          style={classes.mapStyle as React.CSSProperties}
         >
           {nfts.map((nft, index) => {
             return (
