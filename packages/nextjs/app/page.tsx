@@ -139,8 +139,8 @@ Loan Amount: 100 USDC
     setIpfsLink("https://gateway.lighthouse.storage/ipfs/" + response.data.Hash);
   };
 
-  const cardContent = (nft: any) => (
-    <Card sx={{ width: 350, borderRadius: "1em", alignSelf: "center" }}>
+  const cardContent = (nft: any, buttons: any) => (
+    <Card sx={{ width: 250, borderRadius: "1em", alignSelf: "center" }}>
       <CardMedia
         sx={{
           height: 350,
@@ -164,90 +164,14 @@ Loan Amount: 100 USDC
           <ReactMarkdown components={{}}>{nft.description}</ReactMarkdown>
         </Typography>
       </CardContent>
-      <div style={{ margin: "10px" }}>
-        {/* <Button type="primary" onClick={() => info(nft)} style={{ marginRight: "8px" }}>
-        More Info
-      </Button> */}
-        <Button
-          onClick={() => {
-            setStep(1);
-            setSelectedNft(null);
-          }}
-        >
-          End Conversation
-        </Button>
-        {/* <Button
-      onClick={() => {
-        setStep(3);
-        setLoanRequested(true);
-      }}
-      type="primary"
-      style={{ marginLeft: "10px" }}
-    >
-      Yes
-    </Button> */}
-      </div>
+      <div style={{ margin: "10px" }}>{buttons}</div>
     </Card>
   );
 
   const info = (nft: any) => {
     Modal.info({
       title: nft.title,
-      content: (
-        <div>
-          <Card sx={{ width: 250, borderRadius: "1em" }}>
-            <CardMedia
-              sx={{
-                height: 250,
-                objectFit: "cover",
-                borderBottomRightRadius: "1em",
-                borderBottomLeftRadius: "1em",
-              }}
-              image={
-                nft.imageUrl ||
-                nft.media[0].gateway ||
-                nft.media[0].thumbUrl ||
-                "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
-              }
-              title="green iguana"
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h6" component="div">
-                {nft.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {nft.description}
-              </Typography>
-              <br />
-              {/* <Button onClick={() => info(nft)}>More Info</Button> */}
-              <Button
-                onClick={() => {
-                  setStep(2);
-                  setSelectedNft(nft);
-                  setSystemMessage({
-                    role: "system",
-                    content: `Respond to the user as if you are ${
-                      nft.title || " an NFT"
-                    }. Description: ${nft.description?.slice(0, 1000)}...`,
-                  });
-                  setMessages([
-                    {
-                      message: nft.description,
-                      direction: "incoming",
-                      sender: "ChatGPT",
-                    },
-                  ]);
-                  speak(nft.description);
-                }}
-                style={{ marginLeft: "10px" }}
-                type="primary"
-              >
-                Chat!
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      ),
+      content: cardContent(nft, null),
       onOk() {},
     });
   };
@@ -483,7 +407,7 @@ Loan Amount: 100 USDC
           <br />
           <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center" }}>
             {(step === 0 || step === 1) && (
-              <Card sx={{ maxWidth: "700px", borderRadius: "1em", padding: "10px" }}>
+              <Card sx={{ width: "250px", borderRadius: "1em", padding: "10px" }}>
                 <strong>Create your own Historical NFT!</strong>
                 <br />
                 <br />
@@ -537,56 +461,33 @@ Loan Amount: 100 USDC
               nfts.length > 0 &&
               nfts.map((nft: any, index) => (
                 <>
-                  <Card sx={{ width: 250, borderRadius: "1em" }}>
-                    <CardMedia
-                      sx={{
-                        height: 250,
-                        objectFit: "cover",
-                        borderBottomRightRadius: "1em",
-                        borderBottomLeftRadius: "1em",
+                  {cardContent(
+                    nft,
+                    <Button
+                      onClick={() => {
+                        setStep(2);
+                        setSelectedNft(nft);
+                        setSystemMessage({
+                          role: "system",
+                          content: `Respond to the user as if you are ${
+                            nft.title || " an NFT"
+                          }. Description: ${nft.description?.slice(0, 1000)}...`,
+                        });
+                        setMessages([
+                          {
+                            message: nft.description,
+                            direction: "incoming",
+                            sender: "ChatGPT",
+                          },
+                        ]);
+                        speak(nft.description);
                       }}
-                      image={
-                        nft.imageUrl ||
-                        nft.media[0].gateway ||
-                        nft.media[0].thumbUrl ||
-                        "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
-                      }
-                      title="green iguana"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h6" component="div">
-                        {nft.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {nft.description.slice(0, 150)}
-                      </Typography>
-                      <br />
-                      {/* <Button onClick={() => info(nft)}>More Info</Button> */}
-                      <Button
-                        onClick={() => {
-                          setStep(2);
-                          setSelectedNft(nft);
-                          setSystemMessage({
-                            role: "system",
-                            content: `Respond to the user as if you are ${
-                              nft.title || " an NFT"
-                            }. Description: ${nft.description?.slice(0, 1000)}`,
-                          });
-                          setMessages([
-                            {
-                              message: `Hello, I am ${nft.title || " an NFT"}! What would you like to know about me?`,
-                              direction: "incoming",
-                              sender: "ChatGPT",
-                            },
-                          ]);
-                        }}
-                        style={{ marginLeft: "10px" }}
-                        type="primary"
-                      >
-                        Chat!
-                      </Button>
-                    </CardContent>
-                  </Card>
+                      style={{ marginLeft: "10px" }}
+                      type="primary"
+                    >
+                      Chat!
+                    </Button>,
+                  )}
                 </>
               ))}
           </div>
@@ -595,7 +496,17 @@ Loan Amount: 100 USDC
               [selectedNft].map((nft: any, index) => (
                 <>
                   <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                    {cardContent(nft)}
+                    {cardContent(
+                      nft,
+                      <Button
+                        onClick={() => {
+                          setStep(1);
+                          setSelectedNft(null);
+                        }}
+                      >
+                        End Conversation
+                      </Button>,
+                    )}
                     <div
                       style={{
                         position: "relative",
@@ -679,9 +590,9 @@ Loan Amount: 100 USDC
           ref={mapRef}
           mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v12"
-          initialViewState={{ latitude: 42.3601, longitude: -71.0589, zoom: 15 }}
+          initialViewState={{ latitude: 42.3601, longitude: -71.0589, zoom: 12 }}
           maxZoom={30}
-          minZoom={3}
+          minZoom={1}
           style={classes.mapStyle as React.CSSProperties}
         >
           {nfts.map((nft, index) => {
