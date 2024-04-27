@@ -3,6 +3,7 @@ import "~~/styles/globals.css";
 
 import { Metadata } from "next";
 import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
+import { Suspense } from "react";
 import { ThemeProvider } from "~~/components/ThemeProvider";
 
 const baseUrl = process.env.VERCEL_URL
@@ -53,7 +54,9 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
     <html suppressHydrationWarning>
       <body>
         <ThemeProvider enableSystem>
-          <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
+          <ScaffoldEthAppWithProviders>
+            <Suspense fallback={<p>Loading feed...</p>}>{children} </Suspense>
+          </ScaffoldEthAppWithProviders>
         </ThemeProvider>
       </body>
     </html>

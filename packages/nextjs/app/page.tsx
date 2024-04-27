@@ -88,20 +88,19 @@ async function etransfer({ email, amount }: { email: string; amount: number }) {
 
 const Home: NextPage = () => {
   const { address } = useAccount();
-  const params: any = useSearchParams();
-  const x = params.get("walletAddress");
-  console.log(params, x);
+  const params = useSearchParams();
+  const walletAddress = params.get("walletAddress"); // Get specific search param
 
-  const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
+  // State for storing the connected address
+  const [connectedAddress, setConnectedAddress] = useState<string | null>(address || null);
 
   useEffect(() => {
-    if (address) {
-      setConnectedAddress(address);
-    } else if (x) {
-      setConnectedAddress(x);
+    // Update connected address based on walletAddress from URL
+    if (walletAddress) {
+      setConnectedAddress(walletAddress);
+      console.log("Connected address set from URL parameter:", walletAddress);
     }
-    console.log(connectedAddress, address, x);
-  }, [address, params, x]);
+  }, [walletAddress]); // Dependency array includes only walletAddress to react on its changes
 
   useEffect(() => {
     if (connectedAddress) {
