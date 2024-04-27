@@ -88,7 +88,9 @@ const Home: NextPage = () => {
   const { address: connectedAddress } = useAccount();
 
   useEffect(() => {
-    setNfts(historicalSites as never[]);
+    if (connectedAddress) {
+      setNfts(historicalSites as never[]);
+    }
 
     // const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
 
@@ -180,12 +182,15 @@ Loan Amount: 100 USDC
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
-    values.address = connectedAddress;
 
     // create nft with values
     // mint(values)
 
-    setNfts(prevNfts => [values, ...prevNfts] as never[]);
+    if (connectedAddress) {
+      values.address = connectedAddress;
+
+      setNfts(prevNfts => [values, ...prevNfts] as never[]);
+    }
   };
 
   // Custom upload logic (mock)
