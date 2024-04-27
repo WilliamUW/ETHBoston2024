@@ -98,17 +98,16 @@ const Home: NextPage = () => {
     // Update connected address based on walletAddress from URL
     if (walletAddress) {
       setConnectedAddress(walletAddress);
-      console.log("Connected address set from URL parameter:", walletAddress);
+      console.log("Connected address set:", walletAddress);
+      setNfts(historicalSites as never[]);
     }
   }, [walletAddress]); // Dependency array includes only walletAddress to react on its changes
 
   useEffect(() => {
-    if (connectedAddress) {
+    if (address) {
+      setConnectedAddress(address);
       setNfts(historicalSites as never[]);
-    } else {
-      setNfts([]);
-    }
-
+    } 
     // const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
 
     // fetch(url, requestOptions)
@@ -119,7 +118,7 @@ const Home: NextPage = () => {
     //     setStep(1);
     //   })
     //   .catch(error => console.log("error", error));
-  }, [connectedAddress]);
+  }, [address]);
 
   const [form] = Form.useForm();
 
