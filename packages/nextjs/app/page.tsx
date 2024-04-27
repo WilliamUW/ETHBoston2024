@@ -161,10 +161,10 @@ Loan Amount: 100 USDC
           {nft.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          <ReactMarkdown components={{}}>{nft.description}</ReactMarkdown>
+          <ReactMarkdown>{nft.description}</ReactMarkdown>
         </Typography>
+        <div>{buttons}</div>
       </CardContent>
-      <div style={{ margin: "10px" }}>{buttons}</div>
     </Card>
   );
 
