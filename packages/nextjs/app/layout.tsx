@@ -55,7 +55,7 @@ const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
       <body>
         <ThemeProvider enableSystem>
           <ScaffoldEthAppWithProviders>
-            <Suspense fallback={<p>Loading feed...</p>}>{children} </Suspense>
+            <Suspense fallback={<p>Loading feed...</p>}>{children}</Suspense>
           </ScaffoldEthAppWithProviders>
         </ThemeProvider>
       </body>
