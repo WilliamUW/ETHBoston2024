@@ -378,7 +378,7 @@ Loan Amount: 100 USDC
             </div>
           )}
 
-          {step === 0 && connectedAddress && (
+          {step === 0 && nfts.length == 0 && connectedAddress && (
             <div>
               <Button
                 onClick={() => {
