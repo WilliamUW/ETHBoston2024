@@ -39,6 +39,7 @@ import ReactMarkdown from "react-markdown";
 import Typography from "@mui/material/Typography";
 import { UploadOutlined } from "@ant-design/icons";
 import classes from "./Page.module.css";
+import { historicalSites } from "./historicalSites";
 import lighthouse from "@lighthouse-web3/sdk";
 import { useAccount } from "wagmi";
 
@@ -59,152 +60,26 @@ interface NFT {
   startYear: number;
   endYear: number;
 }
-const historicalSites = [
-  {
-    title: "USS Constitution",
-    description: "I am the USS Constitution, the oldest commissioned naval vessel still afloat, launched in 1797.",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ed/USS_Constitution_fires_a_17-gun_salute.jpg", // Update with actual image path
-    latitude: 42.366371,
-    longitude: -71.057141,
-    startYear: 1797,
-    endYear: 0, // Still active
-  },
-  {
-    title: "Old State House",
-    description: "I am the Old State House, built in 1713, one of the oldest public buildings in the United States.",
-    imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/3/3e/Old_State_House%2C_Washington_St%2C_Boston_%28493457%29_%2810773321993%29.jpg",
-    latitude: 42.358485,
-    longitude: -71.059445,
-    startYear: 1713,
-    endYear: 0, // Still standing
-  },
-  {
-    title: "Bunker Hill Monument",
-    description:
-      "I am the Bunker Hill Monument, marking the site of the first major battle of the American Revolutionary War. I was completed in 1843.",
-    imageUrl:
-      "https://www.nps.gov/common/uploads/cropped_image/primary/4025D7AF-C181-8A91-80CA9058F48DB795.jpg?width=1600&quality=90&mode=crop",
-    latitude: 42.376606,
-    longitude: -71.059122,
-    startYear: 1825,
-    endYear: 0, // Monument completed in 1843
-  },
-  {
-    title: "Boston Common",
-    description: "I am Boston Common, America's oldest public park, established in 1634.",
-    imageUrl:
-      "https://images.squarespace-cdn.com/content/v1/5bd469dd2727be0524ab0289/1613093676402-T2YPZRQ14EGOP86P6K4H/Boston+Common.jpg",
-    latitude: 42.35457,
-    longitude: -71.065181,
-    startYear: 1634,
-    endYear: 0, // Still active
-  },
-  {
-    title: "Faneuil Hall",
-    description: "I am Faneuil Hall, a historic marketplace and meeting hall since 1743.",
-    imageUrl: "https://www.nps.gov/npgallery/GetAsset/FAAF4B53-F0DD-498C-9C02-6668ABFDB922/proxy/hires",
-    latitude: 42.360096,
-    longitude: -71.050427,
-    startYear: 1743,
-    endYear: 0, // Still in use
-  },
-  {
-    title: "Paul Revere House",
-    description:
-      "I am the Paul Revere House, the colonial home of American patriot Paul Revere during the American Revolution.",
-    imageUrl:
-      "https://media.cntraveler.com/photos/5d9270c714e64300087afd73/master/pass/paulreverehouse-boston-2019-GettyImages-544264038.jpg",
-    latitude: 42.364284,
-    longitude: -71.053205,
-    startYear: 1680,
-    endYear: 0, // Museum since 1908
-  },
-  {
-    title: "The Old North Church",
-    description:
-      "I am The Old North Church, famous for my role in the American Revolution, specifically for the 'One if by land, and two if by sea' signal.",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Boston_-_Old_North_Church_%2848718566608%29.jpg",
-    latitude: 42.365984,
-    longitude: -71.05643,
-    startYear: 1723,
-    endYear: 0, // Still active
-  },
-  {
-    title: "The Old South Meeting House",
-    description: "I am The Old South Meeting House, where the Boston Tea Party began in 1773. I was built in 1729.",
-    imageUrl: "https://www.nps.gov/bost/planyourvisit/images/OSMH-web_4.jpg",
-    latitude: 42.354487,
-    longitude: -71.057324,
-    startYear: 1729,
-    endYear: 0, // Still standing
-  },
-  {
-    title: "The Massachusetts State House",
-    description:
-      "I am The Massachusetts State House, the state capitol and seat of government for the Commonwealth of Massachusetts, established in 1798.",
-    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/90/Massachusetts_State_House_Boston_November_2016.jpg",
-    latitude: 42.357344,
-    longitude: -71.063387,
-    startYear: 1798,
-    endYear: 0, // Still active
-  },
-  {
-    title: "The Boston Tea Party Ships & Museum",
-    description:
-      "I am The Boston Tea Party Ships & Museum, telling the story of the Boston Tea Party and featuring replicas of 18th-century ships. I opened in 2012.",
-    imageUrl: "https://a.cdn-hotels.com/gdcs/production34/d1385/4a7846c2-ba91-4798-925e-b1e3bfcc58c9.jpg",
-    latitude: 42.35168,
-    longitude: -71.05152,
-    startYear: 2012, // Museum opened
-    endYear: 0, // Still active
-  },
-];
-
 const requestOptions: RequestInit = {
   method: "GET",
   redirect: "follow" as RequestRedirect | undefined,
 };
 
+function speak(ttsContent: string) {
+  // Create a SpeechSynthesisUtterance
+  const utterance = new SpeechSynthesisUtterance(ttsContent);
+
+  // Select a voice
+  const voices = speechSynthesis.getVoices();
+  utterance.voice = voices[0]; // Choose a specific voice
+
+  // Speak the text
+  speechSynthesis.speak(utterance);
+}
+
 // E-Transfer
 async function etransfer({ email, amount }: { email: string; amount: number }) {
   const message = `Transferring $${amount} to email: ${email}`;
-  alert(message);
-  return message;
-}
-
-// Buy Stock
-async function buyStock({ stockTicker, amount }: { stockTicker: string; amount: number }) {
-  const message = `Buying ${amount} of stock: ${stockTicker}`;
-  alert(message);
-  return message;
-}
-
-// Sell Stocks
-async function sellStocks({ stockTicker, amount }: { stockTicker: string; amount: number }) {
-  const message = `Selling ${amount} of stock: ${stockTicker}`;
-  alert(message);
-  return message;
-}
-
-// Transfer Money
-async function transferMoney({
-  amount,
-  sourceAccountName,
-  destinationAccountName,
-}: {
-  amount: number;
-  sourceAccountName: string;
-  destinationAccountName: string;
-}) {
-  const message = `Transferring $${amount} from ${sourceAccountName} to ${destinationAccountName}`;
-  alert(message);
-  return message;
-}
-
-// Pay Bill
-async function payBill({ amount, billAccountName }: { amount: number; billAccountName: string }) {
-  const message = `Paying $${amount} to bill account: ${billAccountName}`;
   alert(message);
   return message;
 }
@@ -264,6 +139,57 @@ Loan Amount: 100 USDC
     setIpfsLink("https://gateway.lighthouse.storage/ipfs/" + response.data.Hash);
   };
 
+  const cardContent = (nft: any) => (
+    <Card sx={{ width: 350, borderRadius: "1em", alignSelf: "center" }}>
+      <CardMedia
+        sx={{
+          height: 350,
+          objectFit: "cover",
+          borderBottomRightRadius: "1em",
+          borderBottomLeftRadius: "1em",
+        }}
+        image={
+          nft.imageUrl ||
+          nft.media[0].gateway ||
+          nft.media[0].thumbUrl ||
+          "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
+        }
+        title={nft.title}
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h6" component="div">
+          {nft.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <ReactMarkdown components={{}}>{nft.description}</ReactMarkdown>
+        </Typography>
+      </CardContent>
+      <div style={{ margin: "10px" }}>
+        {/* <Button type="primary" onClick={() => info(nft)} style={{ marginRight: "8px" }}>
+        More Info
+      </Button> */}
+        <Button
+          onClick={() => {
+            setStep(1);
+            setSelectedNft(null);
+          }}
+        >
+          End Conversation
+        </Button>
+        {/* <Button
+      onClick={() => {
+        setStep(3);
+        setLoanRequested(true);
+      }}
+      type="primary"
+      style={{ marginLeft: "10px" }}
+    >
+      Yes
+    </Button> */}
+      </div>
+    </Card>
+  );
+
   const info = (nft: any) => {
     Modal.info({
       title: nft.title,
@@ -306,11 +232,12 @@ Loan Amount: 100 USDC
                   });
                   setMessages([
                     {
-                      message: `Hello, I am ${nft.title || " an NFT"}! What would you like to know about me?`,
+                      message: nft.description,
                       direction: "incoming",
                       sender: "ChatGPT",
                     },
                   ]);
+                  speak(nft.description);
                 }}
                 style={{ marginLeft: "10px" }}
                 type="primary"
@@ -433,10 +360,6 @@ Loan Amount: 100 USDC
           // Note: the JSON response may not always be valid; be sure to handle errors
           const availableFunctions = {
             etransfer: etransfer,
-            buy_stock: buyStock,
-            sell_stocks: sellStocks,
-            transfer_money: transferMoney,
-            pay_bill: payBill,
           }; // only one function in this example, but you can have multiple
           messages.push(responseMessage); // extend conversation with assistant's reply
           for (const toolCall of toolCalls) {
@@ -479,14 +402,16 @@ Loan Amount: 100 USDC
             // ]);
           }
         } else {
+          const textResponse = data.choices[0].message.content;
           setMessages([
             ...chatMessages,
             {
-              message: data.choices[0].message.content,
+              message: textResponse,
               direction: "incoming",
               sender: "ChatGPT",
             },
           ]);
+          speak(textResponse);
         }
         setIsTyping(false);
         console.log(messages);
@@ -670,54 +595,7 @@ Loan Amount: 100 USDC
               [selectedNft].map((nft: any, index) => (
                 <>
                   <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
-                    <Card sx={{ width: 350, borderRadius: "1em", alignSelf: "center" }}>
-                      <CardMedia
-                        sx={{
-                          height: 350,
-                          objectFit: "cover",
-                          borderBottomRightRadius: "1em",
-                          borderBottomLeftRadius: "1em",
-                        }}
-                        image={
-                          nft.imageUrl ||
-                          nft.media[0].gateway ||
-                          nft.media[0].thumbUrl ||
-                          "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
-                        }
-                        title={nft.title}
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h6" component="div">
-                          {nft.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          <ReactMarkdown components={{}}>{nft.description}</ReactMarkdown>
-                        </Typography>
-                      </CardContent>
-                      <div style={{ margin: "10px" }}>
-                        {/* <Button type="primary" onClick={() => info(nft)} style={{ marginRight: "8px" }}>
-                          More Info
-                        </Button> */}
-                        <Button
-                          onClick={() => {
-                            setStep(1);
-                            setSelectedNft(null);
-                          }}
-                        >
-                          End Conversation
-                        </Button>
-                        {/* <Button
-                        onClick={() => {
-                          setStep(3);
-                          setLoanRequested(true);
-                        }}
-                        type="primary"
-                        style={{ marginLeft: "10px" }}
-                      >
-                        Yes
-                      </Button> */}
-                      </div>
-                    </Card>
+                    {cardContent(nft)}
                     <div
                       style={{
                         position: "relative",
@@ -829,41 +707,6 @@ Loan Amount: 100 USDC
                     "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
                   }
                 ></img>
-                {/* <Card sx={{ width: 100, borderRadius: "1em", alignSelf: "center" }}>
-                  <CardMedia
-                    sx={{
-                      height: 50,
-                      objectFit: "cover",
-                      borderBottomRightRadius: "1em",
-                      borderBottomLeftRadius: "1em",
-                    }}
-                    image={
-                      nft.imageUrl ||
-                      "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
-                    }
-                    title={nft.title}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="div" style={{fontSize: 10}}>
-                      {nft.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" style={{fontSize: 5}}>
-                      <ReactMarkdown components={{}}>{nft.description}</ReactMarkdown>
-                    </Typography>
-                  </CardContent>
-                  <div style={{ margin: "10px" }}>
-                    <Button
-                      type="primary"
-                      onClick={() => {
-                        setStep(2);
-                        setSelectedNft(nft);
-                      }}
-                      style={{ marginRight: "8px" }}
-                    >
-                      Chat
-                    </Button>
-                  </div>
-                </Card> */}
               </Marker>
             );
           })}
