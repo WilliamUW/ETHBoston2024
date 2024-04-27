@@ -23,7 +23,9 @@ import { Button, Form, FormInstance, Input, InputNumber, Upload } from "antd";
 import { Col, Modal, Row } from "antd";
 import Map, { Marker, Popup } from "react-map-gl";
 import { RcFile, UploadProps } from "antd/lib/upload";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { Address } from "~~/components/scaffold-eth";
 import Card from "@mui/material/Card";
@@ -85,7 +87,21 @@ async function etransfer({ email, amount }: { email: string; amount: number }) {
 }
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
+  const { address } = useAccount();
+  const params: any = useSearchParams();
+  const x = params.get("walletAddress");
+  console.log(params, x);
+
+  const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (address) {
+      setConnectedAddress(address);
+    } else if (x) {
+      setConnectedAddress(x);
+    }
+    console.log(connectedAddress, address, x);
+  }, [address, params, x]);
 
   useEffect(() => {
     if (connectedAddress) {
