@@ -9483,6 +9483,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ethers@npm:^6.12.0":
+  version: 6.12.0
+  resolution: "ethers@npm:6.12.0"
+  dependencies:
+    "@adraffy/ens-normalize": 1.10.1
+    "@noble/curves": 1.2.0
+    "@noble/hashes": 1.3.2
+    "@types/node": 18.15.13
+    aes-js: 4.0.0-beta.5
+    tslib: 2.4.0
+    ws: 8.5.0
+  checksum: a9fa6937f57be00f217cac045752113f0be6ecbef77b90d653202f4127930023e86d20f06631cc4114bdbcf28fcb7dcb5244a88e2e430df1dfcb623e93c23366
+  languageName: node
+  linkType: hard
+
 "ethjs-unit@npm:0.1.6":
   version: 0.1.6
   resolution: "ethjs-unit@npm:0.1.6"
@@ -17112,6 +17127,7 @@ __metadata:
     "@web3-storage/w3up-client": ^12.5.1
     alchemy-sdk: ^3.2.1
     antd: ^5.16.1
+    ethers: ^6.12.0
     husky: ^8.0.1
     lint-staged: ^13.0.3
     mapbox-gl: ^3.3.0

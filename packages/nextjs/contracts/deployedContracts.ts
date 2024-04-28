@@ -5,36 +5,16 @@
 import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
 const deployedContracts = {
-  2710: {
-    SignedNFTAgreement: {
-      address: "0x2D7D2B5fb66D414aD5dac757361139f230A92D4c",
+  31337: {
+    YourContract: {
+      address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
       abi: [
         {
           inputs: [
             {
               internalType: "address",
-              name: "newOwner",
+              name: "_owner",
               type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_loanAmount",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "_interestRate",
-              type: "uint256",
-            },
-            {
-              internalType: "uint256",
-              name: "_loanDuration",
-              type: "uint256",
-            },
-            {
-              internalType: "string",
-              name: "_rwaCollateralAgreementHash",
-              type: "string",
             },
           ],
           stateMutability: "nonpayable",
@@ -46,185 +26,42 @@ const deployedContracts = {
             {
               indexed: true,
               internalType: "address",
-              name: "nftAddress",
+              name: "greetingSetter",
               type: "address",
             },
-            {
-              indexed: true,
-              internalType: "uint256",
-              name: "tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "CollateralLocked",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "nftAddress",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "uint256",
-              name: "tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "CollateralReleased",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
-            {
-              indexed: true,
-              internalType: "address",
-              name: "previousOwner",
-              type: "address",
-            },
-            {
-              indexed: true,
-              internalType: "address",
-              name: "newOwner",
-              type: "address",
-            },
-          ],
-          name: "OwnershipTransferred",
-          type: "event",
-        },
-        {
-          anonymous: false,
-          inputs: [
             {
               indexed: false,
               internalType: "string",
-              name: "agreementHash",
+              name: "newGreeting",
               type: "string",
             },
+            {
+              indexed: false,
+              internalType: "bool",
+              name: "premium",
+              type: "bool",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "value",
+              type: "uint256",
+            },
           ],
-          name: "RWACollateralAgreementAdded",
+          name: "GreetingChange",
           type: "event",
         },
         {
           inputs: [],
-          name: "interestRate",
+          name: "greeting",
           outputs: [
             {
-              internalType: "uint256",
+              internalType: "string",
               name: "",
-              type: "uint256",
+              type: "string",
             },
           ],
           stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "isLocked",
-          outputs: [
-            {
-              internalType: "bool",
-              name: "",
-              type: "bool",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "loanAmount",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "loanDuration",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "nftAddress",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "_tokenId",
-              type: "uint256",
-            },
-          ],
-          name: "lockCollateral",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "nftAddress",
-          outputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-            {
-              internalType: "bytes",
-              name: "",
-              type: "bytes",
-            },
-          ],
-          name: "onERC721Received",
-          outputs: [
-            {
-              internalType: "bytes4",
-              name: "",
-              type: "bytes4",
-            },
-          ],
-          stateMutability: "nonpayable",
           type: "function",
         },
         {
@@ -242,34 +79,33 @@ const deployedContracts = {
         },
         {
           inputs: [],
-          name: "releaseCollateral",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "renounceOwnership",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [],
-          name: "rwaCollateralAgreementHash",
+          name: "premium",
           outputs: [
             {
-              internalType: "string",
+              internalType: "bool",
               name: "",
-              type: "string",
+              type: "bool",
             },
           ],
           stateMutability: "view",
           type: "function",
         },
         {
+          inputs: [
+            {
+              internalType: "string",
+              name: "_newGreeting",
+              type: "string",
+            },
+          ],
+          name: "setGreeting",
+          outputs: [],
+          stateMutability: "payable",
+          type: "function",
+        },
+        {
           inputs: [],
-          name: "tokenId",
+          name: "totalCounter",
           outputs: [
             {
               internalType: "uint256",
@@ -284,62 +120,34 @@ const deployedContracts = {
           inputs: [
             {
               internalType: "address",
-              name: "newOwner",
+              name: "",
               type: "address",
             },
           ],
-          name: "transferOwnership",
+          name: "userGreetingCounter",
+          outputs: [
+            {
+              internalType: "uint256",
+              name: "",
+              type: "uint256",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+        {
+          inputs: [],
+          name: "withdraw",
           outputs: [],
           stateMutability: "nonpayable",
           type: "function",
         },
         {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_interestRate",
-              type: "uint256",
-            },
-          ],
-          name: "updateInterestRate",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_loanAmount",
-              type: "uint256",
-            },
-          ],
-          name: "updateLoanAmount",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
-        },
-        {
-          inputs: [
-            {
-              internalType: "uint256",
-              name: "_loanDuration",
-              type: "uint256",
-            },
-          ],
-          name: "updateLoanDuration",
-          outputs: [],
-          stateMutability: "nonpayable",
-          type: "function",
+          stateMutability: "payable",
+          type: "receive",
         },
       ],
-      inheritedFunctions: {
-        onERC721Received:
-          "@openzeppelin/contracts/token/ERC721/utils/ERC721Holder.sol",
-        owner: "@openzeppelin/contracts/access/Ownable.sol",
-        renounceOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-        transferOwnership: "@openzeppelin/contracts/access/Ownable.sol",
-      },
+      inheritedFunctions: {},
     },
   },
 } as const;
