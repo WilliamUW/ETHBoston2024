@@ -117,12 +117,12 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (contractSites) {
       const convertedNfts = contractSites.map(site => ({
-        name: site.name,
+        title: site.name,
         description: site.description,
         imageUrl: site.imageUrl,
         // Convert BigInt to number - assuming the precision is manageable in JS
-        latitude: Number(site.latitude),
-        longitude: Number(site.longitude),
+        latitude: Number(site.latitude) / coordinateAdjustmentFactor,
+        longitude: Number(site.longitude) / coordinateAdjustmentFactor,
         owner: site.owner,
       }));
 
@@ -629,8 +629,8 @@ Loan Amount: 100 USDC
             return (
               <Marker
                 key={index}
-                longitude={validValues((nft as NFT).longitude / coordinateAdjustmentFactor) || 43}
-                latitude={validValues((nft as NFT).latitude / coordinateAdjustmentFactor) || -79}
+                longitude={validValues((nft as NFT).longitude) || 43}
+                latitude={validValues((nft as NFT).latitude) || -79}
                 onClick={() => {
                   console.log(nft);
                   info(nft);
@@ -654,8 +654,8 @@ Loan Amount: 100 USDC
           {selectedMarker ? (
             <Popup
               offset={25}
-              longitude={validValues(selectedMarker.longitude / coordinateAdjustmentFactor || 43)}
-              latitude={validValues(selectedMarker.latitude / coordinateAdjustmentFactor || -79)}
+              longitude={validValues(selectedMarker.longitude || 43)}
+              latitude={validValues(selectedMarker.latitude || -79)}
               onClose={() => {
                 setSelectedMarker(null);
               }}
