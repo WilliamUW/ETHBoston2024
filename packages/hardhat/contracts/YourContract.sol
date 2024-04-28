@@ -1,71 +1,63 @@
-//SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0 <0.9.0;
+// SPDX-License-Identifier: Unlicensed
+pragma solidity ^0.8.19;
 
-// Useful for debugging. Remove when deploying to a live network.
-import "hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-// Use openzeppelin to inherit battle-tested implementations (ERC20, ERC721, etc)
-// import "@openzeppelin/contracts/access/Ownable.sol";
+contract YourContract is ERC721 {
 
-/**
- * A smart contract that allows changing a state variable of the contract and tracking the changes
- * It also allows the owner to withdraw the Ether in the contract
- * @author BuidlGuidl
- */
-contract YourContract {
-	// State Variables
-	address public immutable owner;
-	string public greeting = "Building Unstoppable Apps!!!";
-	bool public premium = false;
-	uint256 public totalCounter = 0;
-	mapping(address => uint) public userGreetingCounter;
+    uint256 private s_tokenCounter;
+    mapping(uint256 => string) private s_tokenIdToUri;
+    
+    constructor() ERC721("MonuMints", "Monu") {
+        s_tokenCounter = 0;
+    }
 
-	struct Object {
+    struct Landmark {
         string name;
         string description;
         string imageUrl;
         int256 latitude;
         int256 longitude;
-		address owner;
     }
 
-    Object[] public objects;
+     
+    Landmark[] public landmarks;
 
-	function insertObject(
+    //////////////// Functions ////////////////
+
+    function mintNft(
         string memory _name,
         string memory _description,
-        string memory _imageUrl,
+        string memory _tokenUri,
         int256 _latitude,
-        int256 _longitude,
-		address owner
+        int256 _longitude) public {
+        s_tokenIdToUri[s_tokenCounter] = _tokenUri;
+        _safeMint(msg.sender, s_tokenCounter);
+        s_tokenCounter++;
+        landmarks.push(Landmark(
+            _name, _description, _tokenUri, _latitude, _longitude
+            ));
+    }
+    
+
+    function mintNftWithDefaults(
+        string memory _name,
+        string memory _description,
+        string memory _tokenUri
     ) public {
-        objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, owner));
+        s_tokenIdToUri[s_tokenCounter] = _tokenUri;
+        _safeMint(msg.sender, s_tokenCounter);
+        s_tokenCounter++;
+        landmarks.push(Landmark(_name, _description, _tokenUri, -79, 43));
     }
 
-	function readObjects(address owner) public view returns (Object[] memory) {
-        return objects;
+//////////////// View Functions ////////////////
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        return s_tokenIdToUri[tokenId];
+    } 
+
+    // This reads all of the objects in the array
+    function readObjects() public view returns (Landmark[] memory) {
+        return landmarks;
     }
-
-	// Events: a way to emit log statements from smart contract that can be listened to by external parties
-	event GreetingChange(
-		address indexed greetingSetter,
-		string newGreeting,
-		bool premium,
-		uint256 value
-	);
-
-	// Constructor: Called once on contract deployment
-	// Check packages/hardhat/deploy/00_deploy_your_contract.ts
-	constructor(address _owner) {
-		owner = _owner;
-	}
-
-	// Modifier: used to define a set of rules that must be met before or after a function is executed
-	// Check the withdraw() function
-	modifier isOwner() {
-		// msg.sender: predefined variable that represents address of the account that called the current function
-		require(msg.sender == owner, "Not the Owner");
-		_;
-	}
-
 }
