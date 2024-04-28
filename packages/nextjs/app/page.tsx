@@ -205,8 +205,6 @@ Loan Amount: 100 USDC
         }}
         image={
           nft.imageUrl ||
-          nft.media[0].gateway ||
-          nft.media[0].thumbUrl ||
           "https://res.cloudinary.com/simpleview/image/upload/v1699908801/clients/boston-redesign/6ETOS4g0_c4045e9b-d897-4012-8d4c-4ba218d7a389.jpg"
         }
         title={nft.title}
@@ -585,7 +583,6 @@ Loan Amount: 100 USDC
                             <Avatar
                               src={
                                 nft.imageUrl ||
-                                nft.media[0].gateway ||
                                 "https://static.vecteezy.com/system/resources/previews/004/619/774/original/laughing-robot-emoji-color-icon-happy-chatbot-smiley-with-broad-smile-and-closed-eyes-chat-bot-emoticon-artificial-conversational-entity-virtual-assistant-isolated-illustration-vector.jpg"
                               }
                               name={nft.title || "NFT"}
