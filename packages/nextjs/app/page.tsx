@@ -59,6 +59,7 @@ interface NFT {
   imageUrl: string;
   latitude: number;
   longitude: number;
+  owner: string;
 }
 const requestOptions: RequestInit = {
   method: "GET",
@@ -392,35 +393,7 @@ Loan Amount: 100 USDC
 
           {step === 0 && nfts.length == 0 && connectedAddress && (
             <div>
-              <Button
-                onClick={() => {
-                  setNfts([]);
-
-                  const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
-
-                  fetch(url, requestOptions)
-                    .then(response => response.json())
-                    .then(result => {
-                      console.log(result);
-                      setNfts(prevNfts => [...prevNfts, ...result.ownedNfts] as never[]);
-                      setStep(1);
-                    })
-                    .catch(error => console.log("error", error));
-
-                  // const polygonUrl = `${polygonBaseURL}/getNFTs/?owner=${connectedAddress}`;
-
-                  // fetch(polygonUrl, requestOptions)
-                  //   .then(response => response.json())
-                  //   .then(result => {
-                  //     console.log(result);
-                  //     setNfts(prevNfts => [...prevNfts, ...result.ownedNfts] as never[]);
-                  //     setStep(1);
-                  //   })
-                  //   .catch(error => console.log("error", error));
-                }}
-              >
-                Fetch NFTs
-              </Button>
+              <Button onClick={() => {}}>Fetch NFTs</Button>
             </div>
           )}
           <br />
@@ -478,37 +451,39 @@ Loan Amount: 100 USDC
             {(step === 0 || step === 1) &&
               nfts &&
               nfts.length > 0 &&
-              nfts.map((nft: any, index) => (
-                <>
-                  {cardContent(
-                    nft,
-                    <Button
-                      onClick={() => {
-                        setStep(2);
-                        setSelectedNft(nft);
-                        setSystemMessage({
-                          role: "system",
-                          content: `Respond to the user as if you are ${
-                            nft.title || " an NFT"
-                          }. Description: ${nft.description?.slice(0, 1000)}...`,
-                        });
-                        setMessages([
-                          {
-                            message: nft.description,
-                            direction: "incoming",
-                            sender: "ChatGPT",
-                          },
-                        ]);
-                        speak(nft.description);
-                      }}
-                      style={{ marginLeft: "10px" }}
-                      type="primary"
-                    >
-                      Chat!
-                    </Button>,
-                  )}
-                </>
-              ))}
+              nfts
+                .filter((nft: NFT) => nft.owner === connectedAddress)
+                .map((nft: NFT, index) => (
+                  <>
+                    {cardContent(
+                      nft,
+                      <Button
+                        onClick={() => {
+                          setStep(2);
+                          setSelectedNft(nft);
+                          setSystemMessage({
+                            role: "system",
+                            content: `Respond to the user as if you are ${
+                              nft.title || " an NFT"
+                            }. Description: ${nft.description?.slice(0, 1000)}...`,
+                          });
+                          setMessages([
+                            {
+                              message: nft.description,
+                              direction: "incoming",
+                              sender: "ChatGPT",
+                            },
+                          ]);
+                          speak(nft.description);
+                        }}
+                        style={{ marginLeft: "10px" }}
+                        type="primary"
+                      >
+                        Chat!
+                      </Button>,
+                    )}
+                  </>
+                ))}
           </div>
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
             {step === 2 &&
@@ -578,31 +553,6 @@ Loan Amount: 100 USDC
               ))}
           </div>
         </div>
-
-        {/* <div className="flex-grow bg-base-300 w-full mt-16 px-8 py-12">
-          <div className="flex justify-center items-center gap-12 flex-col sm:flex-row">
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <BugAntIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Tinker with your smart contract using the{" "}
-                <Link href="/debug" passHref className="link">
-                  Debug Contracts
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-            <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
-            </div>
-          </div>
-        </div> */}
       </div>
       <div className={classes.mainStyle}>
         <Map

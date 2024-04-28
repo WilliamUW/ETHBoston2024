@@ -7,6 +7,7 @@ export const historicalSites = [
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ed/USS_Constitution_fires_a_17-gun_salute.jpg",
     latitude: 42366371,
     longitude: -71057141,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "Old State House",
@@ -16,6 +17,7 @@ export const historicalSites = [
       "https://upload.wikimedia.org/wikipedia/commons/3/3e/Old_State_House%2C_Washington_St%2C_Boston_%28493457%29_%2810773321993%29.jpg",
     latitude: 42358485,
     longitude: -71059445,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "Bunker Hill Monument",
@@ -25,6 +27,7 @@ export const historicalSites = [
       "https://www.nps.gov/common/uploads/cropped_image/primary/4025D7AF-C181-8A91-80CA9058F48DB795.jpg?width=1600&quality=90&mode=crop",
     latitude: 42376606,
     longitude: -71059122,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "Boston Common",
@@ -34,6 +37,7 @@ export const historicalSites = [
       "https://images.squarespace-cdn.com/content/v1/5bd469dd2727be0524ab0289/1613093676402-T2YPZRQ14EGOP86P6K4H/Boston+Common.jpg",
     latitude: 4235457,
     longitude: -71065181,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "Faneuil Hall",
@@ -42,6 +46,7 @@ export const historicalSites = [
     imageUrl: "https://www.nps.gov/npgallery/GetAsset/FAAF4B53-F0DD-498C-9C02-6668ABFDB922/proxy/hires",
     latitude: 42360096,
     longitude: -71050427,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "Paul Revere House",
@@ -51,6 +56,7 @@ export const historicalSites = [
       "https://media.cntraveler.com/photos/5d9270c714e64300087afd73/master/pass/paulreverehouse-boston-2019-GettyImages-544264038.jpg",
     latitude: 42364284,
     longitude: -71053205,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "The Old North Church",
@@ -59,6 +65,7 @@ export const historicalSites = [
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Boston_-_Old_North_Church_%2848718566608%29.jpg",
     latitude: 42365984,
     longitude: -7105643,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "The Old South Meeting House",
@@ -67,6 +74,7 @@ export const historicalSites = [
     imageUrl: "https://www.nps.gov/bost/planyourvisit/images/OSMH-web_4.jpg",
     latitude: 42354487,
     longitude: -71057324,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "The Massachusetts State House",
@@ -75,6 +83,7 @@ export const historicalSites = [
     imageUrl: "https://upload.wikimedia.org/wikipedia/commons/9/90/Massachusetts_State_House_Boston_November_2016.jpg",
     latitude: 42357344,
     longitude: -71063387,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
   {
     title: "The Boston Tea Party Ships & Museum",
@@ -83,5 +92,6 @@ export const historicalSites = [
     imageUrl: "https://a.cdn-hotels.com/gdcs/production34/d1385/4a7846c2-ba91-4798-925e-b1e3bfcc58c9.jpg",
     latitude: 4235168,
     longitude: -7105152,
+    owner: "0x0E5d299236647563649526cfa25c39d6848101f5",
   },
 ];
