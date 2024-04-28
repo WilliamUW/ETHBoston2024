@@ -26,6 +26,7 @@ import { RcFile, UploadProps } from "antd/lib/upload";
 import { Route, Routes, useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 import { Address } from "~~/components/scaffold-eth";
 import Card from "@mui/material/Card";
@@ -44,7 +45,6 @@ import classes from "./Page.module.css";
 import { historicalSites } from "./historicalSites";
 import lighthouse from "@lighthouse-web3/sdk";
 import { useAccount } from "wagmi";
-import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 // Import the missing function
 
@@ -86,6 +86,16 @@ async function etransfer({ email, amount }: { email: string; amount: number }) {
   const message = `Transferring $${amount} to email: ${email}`;
   alert(message);
   return message;
+}
+
+function validValues(value: number) {
+  if (value === undefined || isNaN(value)) {
+    return 0;
+  }
+  if (value >= -90 && value <= 90) {
+    return value;
+  }
+  return 0;
 }
 
 const Home: NextPage = () => {
@@ -221,18 +231,42 @@ Loan Amount: 100 USDC
     });
   };
 
+  const [newNFT, setNewNFT] = useState([]);
+
+  const { writeAsync: writeAsync } = useScaffoldContractWrite({
+    contractName: "YourContract",
+    functionName: "insertObject",
+    args: newNFT,
+  });
+
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: NFT) => {
     console.log("Received values of form: ", values);
+
+    values.latitude *= coordinateAdjustmentFactor;
+    values.longitude *= coordinateAdjustmentFactor;
 
     // create nft with values
     // mint(values)
-
     if (connectedAddress) {
-      values.address = connectedAddress;
+      values.owner = connectedAddress;
 
       setNfts(prevNfts => [values, ...prevNfts] as never[]);
+    }
+
+    try {
+      setNewNFT([
+        values.title,
+        values.description,
+        values.imageUrl,
+        values.latitude,
+        values.longitude,
+        connectedAddress,
+      ]);
+      writeAsync();
+    } catch (e) {
+      console.error("Error setting greeting:", e);
     }
   };
 
@@ -595,8 +629,8 @@ Loan Amount: 100 USDC
             return (
               <Marker
                 key={index}
-                longitude={(nft as NFT).longitude / coordinateAdjustmentFactor || 43}
-                latitude={(nft as NFT).latitude / coordinateAdjustmentFactor || -79}
+                longitude={validValues((nft as NFT).longitude / coordinateAdjustmentFactor) || 43}
+                latitude={validValues((nft as NFT).latitude / coordinateAdjustmentFactor) || -79}
                 onClick={() => {
                   console.log(nft);
                   info(nft);
@@ -620,8 +654,8 @@ Loan Amount: 100 USDC
           {selectedMarker ? (
             <Popup
               offset={25}
-              longitude={(selectedMarker as { longitude?: number }).longitude || 43}
-              latitude={(selectedMarker as { latitude?: number }).latitude || -79}
+              longitude={validValues(selectedMarker.longitude / coordinateAdjustmentFactor || 43)}
+              latitude={validValues(selectedMarker.latitude / coordinateAdjustmentFactor || -79)}
               onClose={() => {
                 setSelectedMarker(null);
               }}
