@@ -20,6 +20,32 @@ contract YourContract {
 	uint256 public totalCounter = 0;
 	mapping(address => uint) public userGreetingCounter;
 
+	struct Object {
+        string name;
+        string description;
+        string imageUrl;
+        int256 latitude;
+        int256 longitude;
+		address owner;
+    }
+
+    Object[] public objects;
+
+	function insertObject(
+        string memory _name,
+        string memory _description,
+        string memory _imageUrl,
+        int256 _latitude,
+        int256 _longitude,
+		address owner
+    ) public {
+        objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, owner));
+    }
+
+	function readObjects(address owner) public view returns (Object[] memory) {
+        return objects;
+    }
+
 	// Events: a way to emit log statements from smart contract that can be listened to by external parties
 	event GreetingChange(
 		address indexed greetingSetter,
