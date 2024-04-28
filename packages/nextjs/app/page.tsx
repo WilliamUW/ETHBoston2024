@@ -248,8 +248,6 @@ Loan Amount: 100 USDC
     // mint(values)
     if (connectedAddress) {
       values.owner = connectedAddress;
-
-      setNfts(prevNfts => [values, ...prevNfts] as never[]);
     }
 
     try {
