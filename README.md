@@ -4,6 +4,8 @@
 
 [Check out the live demo here!](https://monumints.vercel.app/)
 
+# MonuMints - Bringing History to Life
+
 ## 🌟 Inspiration
 - 🏛️ Boston houses 324 of the 351 properties listed on the National Register in Suffolk County, including 58 National Historic Landmarks.
 - 🎭 As a huge fan of "Hamilton" and American history, the loss of historical sites like the Arlington Building and The Old Howard Theatre in Boston deeply moved us.
@@ -14,10 +16,12 @@
 - 🤖 **AI-Augmented Interaction**: Each NFT acts as an AI conduit, using its metadata to enable conversations with historical figures or sites—imagine chatting with the Bunker Hill Monument about its own history!
 
 ## 🔧 How we built it
-- **Setup**: Utilized Scaffold ETH + Next.js for the project framework.
-- **Blockchain**: Fetched NFTs from Polygon zkEVM, ensuring fast, secure transactions.
-- **AI Integration**: Setup a chatbot that utilizes NFT metadata for dynamic and informative interactions.
-- **Deployment**: Launched the project on Vercel for global accessibility and high performance.
+- **Framework**: Utilized Scaffold ETH + Next.js for a robust front-end and smart contract interaction.
+- **Blockchain**: Deployed smart contracts on the Polygon Cardona zkEVM testnet to leverage its security and scalability while ensuring fast, secure transactions.
+- **AI Integration**: Integrated OpenAI to power dynamic, informative AI responses based on each NFT's metadata.
+- **Mapping**: Incorporated Mapbox to visually render the accurate locations of historical sites on our platform.
+- **Wallet Integration**: Implemented Alchemy Embedded Wallet to enable seamless access to our dApp via email authentication, expanding usability to non-traditional crypto users.
+- **Deployment**: Launched the project on Vercel for global accessibility and high performance, ensuring a responsive and scalable user experience.
 
 ## 🚧 Challenges we ran into
 - Navigating the complexities of integrating AI with blockchain technology.
