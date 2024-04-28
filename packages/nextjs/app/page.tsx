@@ -44,6 +44,9 @@ import classes from "./Page.module.css";
 import { historicalSites } from "./historicalSites";
 import lighthouse from "@lighthouse-web3/sdk";
 import { useAccount } from "wagmi";
+import { useScaffoldContractRead } from "~~/hooks/scaffold-eth";
+
+// Import the missing function
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY; // Fetch API key from .env file
 
@@ -91,21 +94,46 @@ const Home: NextPage = () => {
   const walletAddress = params.get("walletAddress"); // Get specific search param
 
   // State for storing the connected address
+
   const [connectedAddress, setConnectedAddress] = useState<string | null>(address || null);
+
+  const { data: contractSites } = useScaffoldContractRead({
+    contractName: "YourContract",
+    functionName: "readObjects",
+  });
+
+  console.log("contract data: ", contractSites);
+
+  useEffect(() => {
+    if (contractSites) {
+      const convertedNfts = contractSites.map(site => ({
+        name: site.name,
+        description: site.description,
+        imageUrl: site.imageUrl,
+        // Convert BigInt to number - assuming the precision is manageable in JS
+        latitude: Number(site.latitude),
+        longitude: Number(site.longitude),
+        owner: site.owner,
+      }));
+
+      setNfts(convertedNfts as unknown as NFT[]);
+    }
+  }, [contractSites]); // React on changes in contractSites
 
   useEffect(() => {
     // Update connected address based on walletAddress from URL
     if (walletAddress) {
       setConnectedAddress(walletAddress);
       console.log("Connected address set:", walletAddress);
-      setNfts(historicalSites as never[]);
+      // setNfts(historicalSites as never[]);
     }
   }, [walletAddress]); // Dependency array includes only walletAddress to react on its changes
 
   useEffect(() => {
     if (address) {
       setConnectedAddress(address);
-      setNfts(historicalSites as never[]);
+
+      // setNfts(historicalSites as never[]);
     }
     // const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
 
