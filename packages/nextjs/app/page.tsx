@@ -52,15 +52,13 @@ const openai = new OpenAI({ apiKey: API_KEY, dangerouslyAllowBrowser: true });
 const baseURL = "https://eth-mainnet.g.alchemy.com/v2/374l9-eucheJf7r_lvnEZbEJ3dmtKRqn";
 const polygonBaseURL = "https://polygon-mainnet.g.alchemy.com/v2/374l9-eucheJf7r_lvnEZbEJ3dmtKRqn";
 const cardonaBaseURL = "https://polygonzkevm-testnet.g.alchemy.com/v2/F-C_L0Ca71E5bpgTdRznn-r3bUPRatnk";
-
+const coordinateAdjustmentFactor = 1000000;
 interface NFT {
   title: string;
   description: string;
   imageUrl: string;
   latitude: number;
   longitude: number;
-  startYear: number;
-  endYear: number;
 }
 const requestOptions: RequestInit = {
   method: "GET",
@@ -107,7 +105,7 @@ const Home: NextPage = () => {
     if (address) {
       setConnectedAddress(address);
       setNfts(historicalSites as never[]);
-    } 
+    }
     // const url = `${baseURL}/getNFTs/?owner=${connectedAddress}`;
 
     // fetch(url, requestOptions)
@@ -619,8 +617,8 @@ Loan Amount: 100 USDC
             return (
               <Marker
                 key={index}
-                longitude={(nft as { longitude?: number }).longitude || 43}
-                latitude={(nft as { latitude?: number }).latitude || -79}
+                longitude={(nft as NFT).longitude / coordinateAdjustmentFactor || 43}
+                latitude={(nft as NFT).latitude / coordinateAdjustmentFactor || -79}
                 onClick={() => {
                   console.log(nft);
                   info(nft);
