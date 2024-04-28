@@ -37,9 +37,9 @@ contract YourContract {
         string memory _imageUrl,
         int256 _latitude,
         int256 _longitude,
-		address owner
+		address nftOwner
     ) public {
-        objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, owner));
+        objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, nftOwner));
     }
 
 	function deleteObject(uint256 index) public {
