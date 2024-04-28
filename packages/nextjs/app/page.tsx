@@ -231,7 +231,7 @@ Loan Amount: 100 USDC
     });
   };
 
-  const [newNFT, setNewNFT] = useState([]);
+  const [newNFT, setNewNFT] = useState<[string, string, string, bigint, bigint, string]>(["", "", "", BigInt(0), BigInt(0), ""]);
 
   const { writeAsync: writeAsync } = useScaffoldContractWrite({
     contractName: "YourContract",
@@ -244,9 +244,6 @@ Loan Amount: 100 USDC
   const onFinish = async (values: NFT) => {
     console.log("Received values of form: ", values);
 
-    values.latitude *= coordinateAdjustmentFactor;
-    values.longitude *= coordinateAdjustmentFactor;
-
     // create nft with values
     // mint(values)
     if (connectedAddress) {
@@ -256,13 +253,15 @@ Loan Amount: 100 USDC
     }
 
     try {
+      values.latitude *= coordinateAdjustmentFactor;
+      values.longitude *= coordinateAdjustmentFactor;
       setNewNFT([
         values.title,
         values.description,
         values.imageUrl,
-        values.latitude,
-        values.longitude,
-        connectedAddress,
+        BigInt(values.latitude),
+        BigInt(values.longitude),
+        connectedAddress || "0x0E5d299236647563649526cfa25c39d6848101f5",
       ]);
       writeAsync();
     } catch (e) {
