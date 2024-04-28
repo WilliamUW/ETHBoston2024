@@ -39,6 +39,10 @@ contract YourContract {
         int256 _longitude,
 		address nftOwner
     ) public {
+		require(bytes(_name).length > 0, "Name cannot be empty");
+		require(bytes(_description).length > 0, "Description cannot be empty");
+		require(bytes(_imageUrl).length > 0, "_imageUrl cannot be empty");
+
         objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, nftOwner));
     }
 
