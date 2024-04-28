@@ -518,6 +518,7 @@ const Home: NextPage = () => {
               nfts.length > 0 &&
               nfts
                 // .filter((nft: NFT) => nft.owner === connectedAddress)
+                .filter((nft: NFT) => nft.title != "")
                 .map((nft: NFT, index) => (
                   <>
                     {cardContent(
