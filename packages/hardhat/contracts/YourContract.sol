@@ -42,6 +42,11 @@ contract YourContract {
         objects.push(Object(_name, _description, _imageUrl, _latitude, _longitude, owner));
     }
 
+	function deleteObject(uint256 index) public {
+		require(index < objects.length, "Invalid index");
+		delete objects[index];
+	}
+
 	function readObjects() public view returns (Object[] memory) {
         return objects;
     }
