@@ -1,5 +1,9 @@
 [![MonuMint Demo!](https://img.youtube.com/vi/9VtFP-IHFlM/0.jpg)](https://youtu.be/9VtFP-IHFlM)
 
+[Polygon Cardona zkEVM Contract Deployment](https://cardona-zkevm.polygonscan.com/tx/0xea791582e9f0d215939149d4426057b308e6cc856f2127de9923358a9ac9f5a5)
+
+[Check out the live demo here!](https://monumints.vercel.app/)
+
 ## 🌟 Inspiration
 - 🏛️ Boston houses 324 of the 351 properties listed on the National Register in Suffolk County, including 58 National Historic Landmarks.
 - 🎭 As a huge fan of "Hamilton" and American history, the loss of historical sites like the Arlington Building and The Old Howard Theatre in Boston deeply moved us.
