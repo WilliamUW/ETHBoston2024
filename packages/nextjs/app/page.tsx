@@ -1,10 +1,11 @@
 "use client";
 
-import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import "mapbox-gl/dist/mapbox-gl.css";
-
-import * as mapboxgl from "mapbox-gl";
-
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
+import classes from "./Page.module.css";
+import { historicalSites } from "./historicalSites";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   Avatar,
   ChatContainer,
@@ -19,32 +20,28 @@ import {
   VideoCallButton,
   VoiceCallButton,
 } from "@chatscope/chat-ui-kit-react";
-import { Button, Form, FormInstance, Input, InputNumber, Upload } from "antd";
-import { Col, Modal, Row } from "antd";
-import Map, { Marker, Popup } from "react-map-gl";
-import { RcFile, UploadProps } from "antd/lib/upload";
-import { Route, Routes, useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
-
-import { Address } from "~~/components/scaffold-eth";
+import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import lighthouse from "@lighthouse-web3/sdk";
+import { Link } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Image from "next/image";
-import { Link } from "@mui/material";
-import { MessageDirection } from "@chatscope/chat-ui-kit-react/src/types/unions";
+import Typography from "@mui/material/Typography";
+import { Button, Form, FormInstance, Input, InputNumber, Upload } from "antd";
+import { Col, Modal, Row } from "antd";
+import { RcFile, UploadProps } from "antd/lib/upload";
+import * as mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 import type { NextPage } from "next";
 import OpenAI from "openai";
+import Map, { Marker, Popup } from "react-map-gl";
 import ReactMarkdown from "react-markdown";
-import Typography from "@mui/material/Typography";
-import { UploadOutlined } from "@ant-design/icons";
-import classes from "./Page.module.css";
-import { historicalSites } from "./historicalSites";
-import lighthouse from "@lighthouse-web3/sdk";
+import { Route, Routes, useParams } from "react-router-dom";
 import { useAccount } from "wagmi";
+import { Address } from "~~/components/scaffold-eth";
+import { useScaffoldContractRead, useScaffoldContractWrite } from "~~/hooks/scaffold-eth";
 
 // Import the missing function
 
@@ -231,7 +228,14 @@ Loan Amount: 100 USDC
     });
   };
 
-  const [newNFT, setNewNFT] = useState<[string, string, string, bigint, bigint, string]>(["", "", "", BigInt(0), BigInt(0), ""]);
+  const [newNFT, setNewNFT] = useState<[string, string, string, bigint, bigint, string]>([
+    "",
+    "",
+    "",
+    BigInt(0),
+    BigInt(0),
+    "",
+  ]);
 
   const { writeAsync: writeAsync } = useScaffoldContractWrite({
     contractName: "YourContract",
@@ -511,7 +515,7 @@ Loan Amount: 100 USDC
               nfts &&
               nfts.length > 0 &&
               nfts
-                .filter((nft: NFT) => nft.owner === connectedAddress)
+                // .filter((nft: NFT) => nft.owner === connectedAddress)
                 .map((nft: NFT, index) => (
                   <>
                     {cardContent(
