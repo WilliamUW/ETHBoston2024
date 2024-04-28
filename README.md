@@ -33,4 +33,4 @@
 - Enhance AI capabilities for more nuanced and detailed historical interactions.
 - Explore partnerships with educational institutions and historical societies to reach a wider audience.
 
-🎉 Join us in making history come alive and safeguarding it for future generations with MonuMints!
+🎉 Join us in engaging the current generation by making Boston's incredible history come to life while safeguarding it for all future generations with MonuMint! Thank you.
