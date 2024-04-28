@@ -174,26 +174,6 @@ const Home: NextPage = () => {
     content: `Hello! I am ${selectedNft?.title || " an NFT"}. ${selectedNft?.description?.slice(0, 100)}`,
   });
 
-  const storeWeb3FilesTest = async (address: string, nft: any) => {
-    const currentTime = new Date().toISOString();
-    const text = `Borrower: ${address}
-    
-NFT Collateral: ${JSON.stringify(nft, null, 2)}
-
-Time: ${currentTime}
-    
-Loan Amount: 100 USDC
-    `;
-    const apiKey = "13d44665.a912997a74e3434f8ce7a7ca7a2135f7";
-    const name = `${currentTime} - Loan for ${address} with the NFT ${nft.title} as collateral.`; //Optional
-
-    const response = await lighthouse.uploadText(text, apiKey, name);
-
-    console.log(response);
-
-    setIpfsLink("https://gateway.lighthouse.storage/ipfs/" + response.data.Hash);
-  };
-
   const cardContent = (nft: any, buttons: any) => (
     <Card sx={{ width: 250, borderRadius: "1em", alignSelf: "center" }}>
       <CardMedia
@@ -246,6 +226,24 @@ Loan Amount: 100 USDC
 
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
 
+  const mintNFT = async () => {
+    writeAsync();
+    if (newNFT[0] != "") {
+      setNfts(prevNfts => [
+        ...prevNfts,
+        {
+          title: newNFT[0],
+          description: newNFT[1],
+          imageUrl: newNFT[2],
+          // Convert BigInt to number - assuming the precision is manageable in JS
+          latitude: Number(newNFT[3]) / coordinateAdjustmentFactor,
+          longitude: Number(newNFT[4]) / coordinateAdjustmentFactor,
+          owner: newNFT[5],
+        },
+      ]);
+    }
+  };
+
   const onFinish = async (values: NFT) => {
     console.log("Received values of form: ", values);
 
@@ -264,10 +262,7 @@ Loan Amount: 100 USDC
         BigInt(values.longitude * coordinateAdjustmentFactor),
         connectedAddress || "0x0E5d299236647563649526cfa25c39d6848101f5",
       ]);
-      writeAsync();
-      if (newNFT[0] != "") {
-        setNfts(prevNfts => [...prevNfts, values]);
-      }
+      alert("Info saved, ready to mint!");
     } catch (e) {
       console.error("Error setting greeting:", e);
     }
@@ -506,7 +501,12 @@ Loan Amount: 100 USDC
                   </Form.Item>
                   <Form.Item>
                     <Button type="primary" htmlType="submit">
-                      Mint NFT!
+                      1. Save NFT Info
+                    </Button>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button onClick={mintNFT}>
+                      2. Mint NFT!
                     </Button>
                   </Form.Item>
                 </Form>
